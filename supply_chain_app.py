@@ -657,10 +657,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
         
 
-        st.caption(
-            "This is the model's estimated score, not a guarantee "
-            "of the actual delivery outcome."
-        )
 
 except Exception as error:
     st.error("The model could not be loaded or used.")
