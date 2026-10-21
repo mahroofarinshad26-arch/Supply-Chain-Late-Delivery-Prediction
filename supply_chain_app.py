@@ -508,6 +508,154 @@ try:
             )
 
         st.progress(late_probability)
+        # Model sensitivity analysis
+        st.markdown("### 🔎 Model Explanation")
+        st.caption(
+            "These results show how the model responds to changes "
+            "in individual inputs. They are not confirmed causes "
+            "of delivery delays."
+        )
+
+        baseline_probability = late_probability
+        feature_effects = []
+
+        # Test categorical features one at a time
+        for col_index, col in enumerate(categorical_cols):
+            original_value = categorical_values[col]
+            original_encoded = encoded_values[col_index]
+            probabilities_for_feature = []
+
+            options = list(label_encoders[col].classes_)
+
+            for option in options:
+                option_encoded = int(
+                    label_encoders[col].transform([option])[0]
+                )
+
+                changed_categorical = encoded_values.copy()
+                changed_categorical[col_index] = option_encoded
+
+                cat_tensor = torch.tensor(
+                    [changed_categorical], dtype=torch.long
+                )
+
+                with torch.no_grad():
+                    changed_output = model(
+                        cat_tensor, numerical_tensor
+                    )
+                    changed_probability = float(
+                        torch.softmax(changed_output, dim=1)[0, 1].item()
+                    )
+
+                probabilities_for_feature.append(
+                    changed_probability
+                )
+
+            effect = max(probabilities_for_feature) - min(
+                probabilities_for_feature
+            )
+
+            feature_effects.append({
+                "Feature": col,
+                "Probability range": effect * 100
+            })
+
+        # Test numerical features by changing each value slightly
+        for col_index, col in enumerate(numerical_cols):
+            changed_values = scaled_values.copy()
+            changed_values[0, col_index] += 0.5
+
+            changed_tensor = torch.tensor(
+                changed_values, dtype=torch.float32
+            )
+
+            with torch.no_grad():
+                changed_output = model(
+                    categorical_tensor, changed_tensor
+                )
+                changed_probability = float(
+                    torch.softmax(changed_output, dim=1)[0, 1].item()
+                )
+
+            effect = abs(
+                changed_probability - baseline_probability
+            )
+
+            feature_effects.append({
+                "Feature": col,
+                "Probability range": effect * 100
+            })
+
+        effects_df = pd.DataFrame(feature_effects)
+        effects_df = effects_df.sort_values(
+            "Probability range", ascending=False
+        )
+
+        st.markdown("**Inputs with the strongest model response**")
+        st.dataframe(
+            effects_df.head(5).reset_index(drop=True),
+            use_container_width=True,
+            hide_index=True
+        )
+
+        st.caption(
+            "For categorical features, the range compares available "
+            "categories. For numerical features, it measures the "
+            "response to a small increase in the scaled input. "
+            "These values indicate model sensitivity, not causation."
+        )
+
+except Exception as error:
+    st.error("The model could not be loaded or used.")
+    st.write(
+        "Ensure these files are in the same folder as "
+        "supply_chain_app.py:"
+    )
+    st.code(
+        "supply_chain_app.py\n"
+        "supply_chain_transformer.pth\n"
+        "supply_chain_preprocessing.pkl"
+    )
+    st.caption(f"Technical details: {error}")
+
+
+# ==================================================
+# 10. HOW IT WORKS
+# ==================================================
+st.divider()
+st.markdown("## How It Works")
+
+s1, s2, s3, s4 = st.columns(4)
+
+steps = [
+    (s1, "01", "Enter Details",
+     "Provide order features."),
+    (s2, "02", "Model Analysis",
+     "The Transformer processes the input."),
+    (s3, "03", "Get Prediction",
+     "Review the estimated risk."),
+    (s4, "04", "Plan Ahead",
+     "Use the estimate to support decisions.")
+]
+
+for col, number, heading, description in steps:
+    with col:
+        st.markdown(f"""
+        <div class="info-card">
+            <div style="color:#F2CC70;font-size:26px;font-weight:800;">
+                {number}
+            </div>
+            <h3>{heading}</h3>
+            <p>{description}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+st.markdown("""
+<div class="footer">
+    Supply Chain Risk Analytics | Transformer-Based Prediction Project
+</div>
+""", unsafe_allow_html=True)
+        
 
         st.caption(
             "This is the model's estimated score, not a guarantee "
