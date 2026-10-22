@@ -112,18 +112,24 @@ with st.sidebar:
     st.caption("Supply Chain Risk Analytics")
     st.caption("DataCo project")
 
-# 6. HERO BANNER
-st.markdown("""
-<div style="background:linear-gradient(120deg,#111c30,#182943);
-border:1px solid #293750;border-radius:18px;padding:30px;margin-bottom:20px;">
-<p style="color:#e8b85b;letter-spacing:2px;font-size:12px;">
-SMARTER DECISIONS · STRONGER SUPPLY CHAINS</p>
-<h1 style="color:#f5c76b;margin-bottom:8px;">Supply Chain Intelligence</h1>
-<h3 style="color:#f8fafc !important;">AI-Powered Late Delivery Risk Prediction</h3>
-<p style="color:#cbd5e1;">Analyze order details, estimate delivery risk, and support
-smarter logistics decisions with a trained Transformer model.</p>
-</div>
-""", unsafe_allow_html=True)
+# 6. HERO BANNER WITH LOGISTICS IMAGE
+hero_image_path = BASE_DIR / "supply_chain_banner.pneg"
+
+if hero_image_path.exists():
+    st.image(str(hero_image_path), use_container_width=True)
+else:
+    # Fallback design: app still works if the optional picture is not uploaded.
+    st.markdown("""
+    <div style="background:linear-gradient(120deg,#06172d,#17385a);
+    border:1px solid #293750;border-radius:18px;padding:30px;margin-bottom:20px;">
+    <p style="color:#e8b85b;letter-spacing:2px;font-size:12px;">
+    SMARTER DECISIONS · STRONGER SUPPLY CHAINS</p>
+    <h1 style="color:#f5c76b;margin-bottom:8px;">Supply Chain Intelligence</h1>
+    <h3 style="color:#f8fafc !important;">AI-Powered Late Delivery Risk Prediction</h3>
+    <p style="color:#cbd5e1;">Analyze order details, estimate delivery risk, and support
+    smarter logistics decisions with a trained Transformer model.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # 7. FEATURE CARDS
 st.markdown("## Supply Chain Overview")
