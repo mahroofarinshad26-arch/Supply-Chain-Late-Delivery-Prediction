@@ -295,7 +295,7 @@ try:
                     )
 
         submitted = st.form_submit_button(
-            "🔍 Predict Delivery Risk",
+            " Predict Delivery Risk",
             use_container_width=True
         )
 
