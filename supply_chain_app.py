@@ -53,55 +53,64 @@ div[data-testid="stFormSubmitButton"] button {
 </style>
 """, unsafe_allow_html=True)
 
+# 2. PROFESSIONAL DESIGN
+st.markdown("""
+<style>
+/* Main page background */
+.stApp {
+    background: linear-gradient(135deg, #0b1120, #14243b);
+    color: #f8fafc;
+}
 
-# 3. TRANSFORMER MODEL
-class SupplyChainTransformer(nn.Module):
-    def __init__(self, category_counts, num_numerical,
-                 d_model=32, nhead=4):
-        super().__init__()
+/* Reduce empty space above the content */
+.block-container {
+    padding-top: 0.8rem !important;
+    padding-bottom: 2rem;
+    max-width: 1200px;
+}
 
-        self.embeddings = nn.ModuleList([
-            nn.Embedding(int(count), d_model)
-            for count in category_counts
-        ])
+/* Hide Streamlit's default top toolbar/header space */
+header[data-testid="stHeader"] {
+    background: transparent;
+    height: 1rem;
+}
 
-        self.num_projection = nn.Linear(num_numerical, d_model)
-        self.cls_token = nn.Parameter(torch.zeros(1, 1, d_model))
+/* Headings */
+h1, h2, h3 {
+    color: #f5c76b !important;
+}
 
-        encoder_layer = nn.TransformerEncoderLayer(
-            d_model=d_model,
-            nhead=nhead,
-            dim_feedforward=64,
-            dropout=0.1,
-            batch_first=True
-        )
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #080e1c;
+    border-right: 1px solid #293750;
+}
 
-        self.transformer = nn.TransformerEncoder(
-            encoder_layer, num_layers=2
-        )
+/* Form and metric cards */
+div[data-testid="stForm"],
+div[data-testid="stMetric"] {
+    background-color: #111c30;
+    padding: 22px;
+    border: 1px solid #293750;
+    border-radius: 14px;
+}
 
-        self.classifier = nn.Sequential(
-            nn.Linear(d_model, 16),
-            nn.ReLU(),
-            nn.Dropout(0.1),
-            nn.Linear(16, 2)
-        )
+/* Prediction button */
+div[data-testid="stFormSubmitButton"] button {
+    background: linear-gradient(90deg, #e8b85b, #f5d58b);
+    color: #111827;
+    font-weight: bold;
+    border: none;
+    border-radius: 9px;
+    min-height: 45px;
+}
 
-    def forward(self, categorical, numerical):
-        embedded = torch.stack([
-            embedding(categorical[:, i])
-            for i, embedding in enumerate(self.embeddings)
-        ], dim=1)
-
-        numerical_token = self.num_projection(numerical).unsqueeze(1)
-        cls = self.cls_token.expand(categorical.size(0), -1, -1)
-
-        tokens = torch.cat(
-            [cls, embedded, numerical_token], dim=1
-        )
-
-        encoded = self.transformer(tokens)
-        return self.classifier(encoded[:, 0, :])
+/* Remove extra top margin from the first content block */
+div[data-testid="stVerticalBlock"] > div:first-child {
+    margin-top: 0;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
 # 4. LOAD MODEL AND PREPROCESSING
