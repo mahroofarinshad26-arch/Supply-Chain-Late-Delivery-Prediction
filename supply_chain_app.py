@@ -113,7 +113,7 @@ with st.sidebar:
     st.caption("DataCo project")
 
 # 6. HERO BANNER WITH LOGISTICS IMAGE
-hero_image_path = BASE_DIR / "supply_chain_banner.pneg"
+hero_image_path = BASE_DIR / "supply_chain_banner.jpeg"
 
 if hero_image_path.exists():
     st.image(str(hero_image_path), use_container_width=True)
