@@ -712,4 +712,4 @@ DataCo Supply Chain Project
 
 </div>
 """, unsafe_allow_html=True)
-```
+
