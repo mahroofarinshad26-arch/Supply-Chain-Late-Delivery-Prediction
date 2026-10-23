@@ -479,7 +479,7 @@ def load_model():
 # 5. UI HELPERS
 # =====================================================
 
-NAV_ITEMS = ["🏠  Home", "📊  Prediction", "ℹ️  About"]
+NAV_ITEMS = ["  Home", " Prediction", "  About"]
 
 
 def render_sidebar():
@@ -582,13 +582,13 @@ def render_overview():
 
 def render_how_it_works():
 
-    st.markdown('<div class="how-title">⚙️ How It Works</div>', unsafe_allow_html=True)
+    st.markdown('<div class="how-title"> How It Works</div>', unsafe_allow_html=True)
 
     steps = [
-        ("📝", "01", "Enter Details", "Provide order features."),
-        ("🧠", "02", "Model Analysis", "The Transformer processes the input."),
-        ("📈", "03", "Get Prediction", "Review the estimated risk."),
-        ("🎯", "04", "Plan Ahead", "Use the estimate to support decisions."),
+        ( "01", "Enter Details", "Provide order features."),
+        ( "02", "Model Analysis", "The Transformer processes the input."),
+        ( "03", "Get Prediction", "Review the estimated risk."),
+        ( "04", "Plan Ahead", "Use the estimate to support decisions."),
     ]
 
     cols = st.columns(4)
@@ -730,7 +730,6 @@ wanted_num = [
 def render_prediction():
 
     section_header(
-        "📦",
         "Late Delivery Risk Analysis",
         "Choose the order categories and enter numerical details. The default "
         "numerical values are only starting points; replace them with realistic "
