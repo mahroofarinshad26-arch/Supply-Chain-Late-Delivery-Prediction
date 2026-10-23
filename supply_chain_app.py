@@ -3632,7 +3632,7 @@ def load_model():
 
  
 
-NAV_ITEMS = ["🏠  Home", "📊  Prediction", "ℹ️  About"]
+NAV_ITEMS = ["  Home", " Prediction", " About"]
 
  
 
