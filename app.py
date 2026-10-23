@@ -582,7 +582,7 @@ def render_overview():
 
 def render_how_it_works():
 
-    st.markdown('<div class="how-title">⚙️ How It Works</div>', unsafe_allow_html=True)
+    st.markdown('<div class="how-title"> How It Works</div>', unsafe_allow_html=True)
 
     steps = [
         ("📝", "01", "Enter Details", "Provide order features."),
@@ -674,7 +674,6 @@ def render_result(predicted_class, late_probability):
 def render_sensitivity(effects_df):
 
     section_header(
-        "🔬",
         "Model Response to Input Changes",
         "Shows how the predicted probability changes when individual visible "
         "inputs are varied. This does not establish causation."
@@ -730,7 +729,6 @@ wanted_num = [
 def render_prediction():
 
     section_header(
-        
         "Late Delivery Risk Analysis",
         "Choose the order categories and enter numerical details. The default "
         "numerical values are only starting points; replace them with realistic "
@@ -1013,7 +1011,6 @@ def render_prediction():
 def render_about():
 
     section_header(
-        
         "About",
         "A Transformer-based machine learning application for estimating "
         "late-delivery risk from order data."
