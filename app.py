@@ -479,7 +479,7 @@ def load_model():
 # 5. UI HELPERS
 # =====================================================
 
-NAV_ITEMS = ["🏠  Home", "📊  Prediction", "ℹ️  About"]
+NAV_ITEMS = ["  Home", " Prediction", "  About"]
 
 
 def render_sidebar():
