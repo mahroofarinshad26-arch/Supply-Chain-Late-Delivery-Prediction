@@ -37,6 +37,16 @@ A Transformer-based deep learning model is used to predict delivery risk based o
 * Model evaluation using accuracy, precision, recall, and F1-score
 * Interactive Streamlit web application
 
+##  Live Demo
+
+Try the deployed Streamlit application here:
+
+"Open Supply Chain Late Delivery Risk Prediction App" (https://supply-chain-late-delivery-prediction-cpmrwd3tqtd34bvwvq6iiu.streamlit.app/)
+
+Deployment
+
+The application is deployed using Streamlit Community Cloud. Users can interact with the web application to predict late delivery risk.
+
 ## Model Performance
 
 * Accuracy: 70.95%
