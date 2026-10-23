@@ -677,7 +677,7 @@ def render_sensitivity(effects_df):
         " ",
         "Model Response to Input Changes",
         "Shows how the predicted probability changes when individual visible "
-        "inputs are varied. This does not establish causation.""
+        "inputs are varied. This does not establish causation."
     )
 
     max_val = max(float(effects_df["Probability Change (%)"].max()), 1e-9)
