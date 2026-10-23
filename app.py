@@ -729,6 +729,7 @@ wanted_num = [
 def render_prediction():
 
     section_header(
+        " ",
         "Late Delivery Risk Analysis",
         "Choose the order categories and enter numerical details. The default "
         "numerical values are only starting points; replace them with realistic "
